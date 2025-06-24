@@ -27,7 +27,7 @@ This is an advanced Angular CRUD application built as part of a technical assess
 
 1. Clone the repository:
 
-   git clone https://github.com/your-username/angular-crud-app.git
+   git clone https://github.com/Tamizh-32/angular-crud-app.git
 
    cd angular-crud-app
 
