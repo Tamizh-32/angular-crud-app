@@ -1,0 +1,65 @@
+<div class="container mt-4">
+  <h3 class="mb-4">{{ isEdit ? 'Edit User' : 'Add New User' }}</h3>
+
+  <form [formGroup]="userForm" (ngSubmit)="onSubmit()" novalidate>
+    <div class="row mb-3">
+      <div class="col-md-6">
+        <label class="form-label">First Name</label>
+        <input type="text" formControlName="first_name" class="form-control"
+          [ngClass]="{ 'is-invalid': isSubmitted && userForm.get('first_name')?.invalid }" />
+        <div class="invalid-feedback" *ngIf="isSubmitted && userForm.get('first_name')?.errors">
+          <div *ngIf="userForm.get('first_name')?.errors?.['required']">First name is required.</div>
+          <div *ngIf="userForm.get('first_name')?.errors?.['minlength']">Minimum 2 characters required.</div>
+          <div *ngIf="userForm.get('first_name')?.errors?.['forbiddenName']">This name is not allowed.</div>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <label class="form-label">Last Name</label>
+        <input type="text" formControlName="last_name" class="form-control"
+          [ngClass]="{ 'is-invalid': isSubmitted && userForm.get('last_name')?.invalid }" />
+        <div class="invalid-feedback" *ngIf="isSubmitted && userForm.get('last_name')?.errors">
+          <div *ngIf="userForm.get('last_name')?.errors?.['required']">Last name is required.</div>
+          <div *ngIf="userForm.get('last_name')?.errors?.['minlength']">Minimum 2 characters required.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Email</label>
+      <input type="email" formControlName="email" class="form-control"
+        [ngClass]="{ 'is-invalid': isSubmitted && userForm.get('email')?.invalid }" />
+      <div class="invalid-feedback" *ngIf="isSubmitted && userForm.get('email')?.errors">
+        <div *ngIf="userForm.get('email')?.errors?.['required']">Email is required.</div>
+        <div *ngIf="userForm.get('email')?.errors?.['email']">Enter a valid email.</div>
+      </div>
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Avatar</label>
+
+      <!-- Image preview -->
+      <div *ngIf="imagePreview" class="mb-2">
+        <img [src]="imagePreview" alt="Avatar Preview" class="img-thumbnail" style="max-height: 150px;" />
+      </div>
+      <!-- Image Load When Edit User -->
+      <div *ngIf="isEdit && userForm.get('avatar')?.value && !imagePreview" class="mb-2">
+        <img [src]="userForm.get('avatar')?.value" alt="Avatar" class="img-thumbnail" style="max-height: 150px;">
+        <div class="mt-1 text-muted">{{ userForm.get('avatar')?.value }}</div>
+      </div>
+
+      <input type="file" (change)="onFileChange($event)" class="form-control"
+        [ngClass]="{ 'is-invalid': isSubmitted && userForm.get('avatar')?.invalid }" />
+
+      <div class="invalid-feedback" *ngIf="isSubmitted && userForm.get('avatar')?.errors">
+        <div *ngIf="userForm.get('avatar')?.errors?.['required']">Avatar is required.</div>
+      </div>
+    </div>
+
+
+    <div class="mb-3 d-flex justify-content-between">
+      <button type="button" class="btn btn-secondary" (click)="goBack()">Back</button>
+      <button type="submit" class="btn btn-primary">{{ isEdit ? 'Update' : 'Add' }} User</button>
+    </div>
+  </form>
+</div>
